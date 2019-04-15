@@ -14,5 +14,5 @@ const orderParams = {
   // etc etc
 };
 
-const encryptedOrder = ccav.getEncryptedRequest(orderParams);
+const encryptedOrder = ccav.getEncryptedOrder(orderParams);
 console.log(encryptedOrder);

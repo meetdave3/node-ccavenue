@@ -75,7 +75,7 @@ class Configure {
     }
   }
 
-  getEncryptedRequest(orderParams) {
+  getEncryptedOrder(orderParams) {
     if (this.validate('merchant_id') && orderParams) {
       let data = `merchant_id=${initOptions.merchant_id}`;
       
@@ -85,6 +85,8 @@ class Configure {
 
       return encRequest = ccav.encrypt(data);
 
+    } else if (!orderParams) {
+      this.throwError('Order Params');
     } else {
       this.throwError('Merchant ID');
     }
