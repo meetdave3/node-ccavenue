@@ -1,7 +1,7 @@
 {
   "name": "node-ccavenue",
   "version": "0.0.1",
-  "description": "NPM Module for integrating CCAvenue Payment gateway in Node.js",
+  "description": "Node Module for integrating CCAvenue Payment gateway in Node.js",
   "main": "./lib/index.js",
   "scripts": {
     "clean": "rimraf lib",
