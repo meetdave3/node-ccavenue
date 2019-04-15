@@ -20,10 +20,10 @@ class Configure {
   }
 
   encrypt(plainText) {
-    if (this.validate('workingKey') && plainText) {
-      const { workingKey } = initOptions;
+    if (this.validate('working_key') && plainText) {
+      const { working_key } = initOptions;
       const m = createHash('md5');
-      m.update(workingKey);
+      m.update(working_key);
       const key = m.digest();
       const iv = '\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f';
       const cipher = createCipheriv('aes-128-cbc', key, iv);
@@ -40,10 +40,10 @@ class Configure {
   }
 
   decrypt(encText) {
-    if (this.validate('workingKey') && encText) {
-      const { workingKey } = initOptions;
+    if (this.validate('working_key') && encText) {
+      const { working_key } = initOptions;
       const m = createHash('md5');
-      m.update(workingKey);
+      m.update(working_key);
       const key = m.digest();
       const iv = '\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f';
       const decipher = createDecipheriv('aes-128-cbc', key, iv);
@@ -60,15 +60,34 @@ class Configure {
   }
 
   redirectResponseToJson(response) {
-    ccavResponse = ccav.decrypt(response);    
-    const responseArray = ccavResponse.split('&');
-    const stringify = JSON.stringify(responseArray);
-    const removeQ = stringify.replace(/['"]+/g, '');
-    const removeS = removeQ.replace(/[[\]]/g, '');
-    return output = removeS.split(',').reduce((o, pair) => {
-      pair = pair.split('=');
-      return o[pair[0]] = pair[1], o;
-    }, {});
+    if (response) {
+      ccavResponse = ccav.decrypt(response);    
+      const responseArray = ccavResponse.split('&');
+      const stringify = JSON.stringify(responseArray);
+      const removeQ = stringify.replace(/['"]+/g, '');
+      const removeS = removeQ.replace(/[[\]]/g, '');
+      return output = removeS.split(',').reduce((o, pair) => {
+        pair = pair.split('=');
+        return o[pair[0]] = pair[1], o;
+      }, {});
+    } else {
+      this.throwError('CCAvenue encrypted response');
+    }
+  }
+
+  getEncryptedRequest(orderParams) {
+    if (this.validate('merchant_id') && orderParams) {
+      let data = `merchant_id=${initOptions.merchant_id}`;
+      
+      for(let property in orderParams) {
+        data = `${data}&${property}=${orderParams[property]}`
+      }
+
+      return encRequest = ccav.encrypt(data);
+
+    } else {
+      this.throwError('Merchant ID');
+    }
   }
 
 }
