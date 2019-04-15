@@ -78,10 +78,7 @@ class Configure {
   getEncryptedOrder(orderParams) {
     if (this.validate('merchant_id') && orderParams) {
       let data = `merchant_id=${initOptions.merchant_id}`;
-      
-      for(let property in orderParams) {
-        data = `${data}&${property}=${orderParams[property]}`
-      }
+      data += Object.entries(orderParams).map(([key, value]) => `&${key}=${value}`).join('');
 
       return encRequest = ccav.encrypt(data);
 
