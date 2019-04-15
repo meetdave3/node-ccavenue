@@ -1,0 +1,9 @@
+{
+  "beforeChangelogCommand": "conventional-changelog -i CHANGELOG.md -s",
+  "changelogCommand": "conventional-changelog | tail -n +3",
+  "safeBump": false,
+  "npm": {
+    "publish": true,
+    "access": "public"
+  }
+}

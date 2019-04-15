@@ -1,6 +1,6 @@
 {
   "name": "node-ccavenue",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Node Module for integrating CCAvenue Payment gateway in Node.js",
   "main": "./lib/index.js",
   "scripts": {
