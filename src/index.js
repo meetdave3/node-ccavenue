@@ -11,16 +11,16 @@ class Configure {
     initOptions = options || {};
   }
 
-  validateKey() {
-    return initOptions && initOptions.workingKey ? true : false;
+  validate(key) {
+    return initOptions && initOptions[key] ? true : false;
   }
 
   throwError(requirement) {
-    console.error(`${requirement} is required to perform this action`);
+    throw new Error(`${requirement} is required to perform this action`);
   }
 
   encrypt(plainText) {
-    if (this.validateKey && plainText) {
+    if (this.validate('workingKey') && plainText) {
       const { workingKey } = initOptions;
       const m = createHash('md5');
       m.update(workingKey);
@@ -31,16 +31,16 @@ class Configure {
       encoded += cipher.final('hex');
       return encoded;
     } else if (!plainText) {
-      throwError('Plain text');
+      this.throwError('Plain text');
       return false;
     } else {
-      throwError('Working Key');
+      this.throwError('Working Key');
       return false;
     }
   }
 
   decrypt(encText) {
-    if (this.validateKey && encText) {
+    if (this.validate('workingKey') && encText) {
       const { workingKey } = initOptions;
       const m = createHash('md5');
       m.update(workingKey);
@@ -51,12 +51,24 @@ class Configure {
       decoded += decipher.final('utf8');
       return decoded;
     } else if (!encText) {
-      throwError('Encrypted text');
+      this.throwError('Encrypted text');
       return false;
     } else {
-      throwError('Working Key');
+      this.throwError('Working Key');
       return false;
     }
+  }
+
+  redirectResponseToJson(response) {
+    ccavResponse = ccav.decrypt(response);    
+    const responseArray = ccavResponse.split('&');
+    const stringify = JSON.stringify(responseArray);
+    const removeQ = stringify.replace(/['"]+/g, '');
+    const removeS = removeQ.replace(/[[\]]/g, '');
+    return output = removeS.split(',').reduce((o, pair) => {
+      pair = pair.split('=');
+      return o[pair[0]] = pair[1], o;
+    }, {});
   }
 
 }
