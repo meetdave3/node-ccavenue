@@ -17,12 +17,12 @@ $ yarn add node-ccavenue
 
 ## Initialization
 
-Make sure your test / production merchantId and workingKey are stored as environment variables (best practice)
+Make sure your test / production workingKey and merchantId are stored as environment variables (best practice)
 
 ```javascript
 const nodeCCAvenue = require('node-ccavenue');
-const ccav = new nodeCCAvenue({
-  merchant_id: process.env.test_merchant_id || process.env.prod_merchant_id,
+const ccav = new nodeCCAvenue.Configure({
+  merchant_id: process.env.merchant_id,
   working_key: process.env.test_working_key || process.env.prod_working_key,
 });
 ```
@@ -54,7 +54,7 @@ const orderParams = {
   order_id: 8765432,
   currency: 'INR',
   amount: '100',
-  redirect_url: encodeURIComponent(`http://localhost:3000/api/redirect_url/`)
+  redirect_url: encodeURIComponent(`http://localhost:3000/api/redirect_url/`),
   billing_name: 'Name of the customer',
   // etc etc
 };
