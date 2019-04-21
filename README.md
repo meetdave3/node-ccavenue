@@ -75,6 +75,58 @@ router.post('/api/redirect_url', (req, res) => {
 });
 
 ```
+#### Sample JSON Response from CCAvenue
+
+This is the json response output after passing the encrypted request to *redirectResponseToJson(encResp)*
+
+```json
+
+{
+    "order_id": "9840661",
+    "tracking_id": "308005007091",
+    "bank_ref_no": "1555842850653",
+    "order_status": "Success",
+    "failure_message": "",
+    "payment_mode": "Net Banking",
+    "card_name": "AvenuesTest",
+    "status_code": "null",
+    "status_message": "Y",
+    "currency": "INR",
+    "amount": "1000.00",
+    "billing_name": "OPTIONAL",
+    "billing_address": "OPTIONAL",
+    "billing_city": "OPTIONAL",
+    "billing_state": "OPTIONAL",
+    "billing_zip": "OPTIONAL",
+    "billing_country": "India",
+    "billing_tel": "99999999999",
+    "billing_email": "firstname.lastname@customer.com",
+    "delivery_name": "OPTIONAL",
+    "delivery_address": "OPTIONAL",
+    "delivery_city": "OPTIONAL",
+    "delivery_state": "OPTIONAL",
+    "delivery_zip": "OPTIONAL",
+    "delivery_country": "India",
+    "delivery_tel": "99999999999",
+    "merchant_param1": "",
+    "merchant_param2": "",
+    "merchant_param3": "",
+    "merchant_param4": "",
+    "merchant_param5": "",
+    "vault": "N",
+    "offer_type": "null",
+    "offer_code": "null",
+    "discount_value": "0.0",
+    "mer_amount": "1200.00",
+    "eci_value": "null",
+    "retry": "N",
+    "response_code": "0",
+    "billing_notes": "",
+    "trans_date": "21/04/2019 16:04:38",
+    "bin_country": ""
+}
+
+```
 
 ## Contributing 
 
