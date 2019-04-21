@@ -61,12 +61,12 @@ class Configure {
 
   redirectResponseToJson(response) {
     if (response) {
-      ccavResponse = ccav.decrypt(response);    
+      let ccavResponse = this.decrypt(response);
       const responseArray = ccavResponse.split('&');
       const stringify = JSON.stringify(responseArray);
       const removeQ = stringify.replace(/['"]+/g, '');
       const removeS = removeQ.replace(/[[\]]/g, '');
-      return output = removeS.split(',').reduce((o, pair) => {
+      return removeS.split(',').reduce((o, pair) => {
         pair = pair.split('=');
         return o[pair[0]] = pair[1], o;
       }, {});
@@ -80,7 +80,7 @@ class Configure {
       let data = `merchant_id=${initOptions.merchant_id}`;
       data += Object.entries(orderParams).map(([key, value]) => `&${key}=${value}`).join('');
 
-      return ccav.encrypt(data);
+      return this.encrypt(data);
 
     } else if (!orderParams) {
       this.throwError('Order Params');
