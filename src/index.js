@@ -80,7 +80,7 @@ class Configure {
       let data = `merchant_id=${initOptions.merchant_id}`;
       data += Object.entries(orderParams).map(([key, value]) => `&${key}=${value}`).join('');
 
-      return encRequest = ccav.encrypt(data);
+      return ccav.encrypt(data);
 
     } else if (!orderParams) {
       this.throwError('Order Params');
